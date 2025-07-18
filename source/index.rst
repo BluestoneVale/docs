@@ -19,6 +19,7 @@
    :numbered:
    :caption: 本书目录：
    
-   _introduction/index.rst
-   operating_system/index.rst
+   摘要/index.rst
+   岗位技能/index.rst
+   操作系统/index.rst
 
