@@ -1,7 +1,7 @@
-# pve-doc-cn
+# docs
 
 # 前往Read the docs 查看
 
-https://pve-doc-cn.readthedocs.io/zh_CN/latest/
+https://docs-bluestonevale.readthedocs.io/zh-cn/latest/
 
-目前PVE7.2更新完毕。更新7.3的内容。
+蓝石溪谷的知识库
