@@ -20,6 +20,9 @@
    :caption: 本书目录：
    
    摘要/index.rst
-   岗位技能/index.rst
-   操作系统/index.rst
-
+   工作岗位/index.rst
+   系统基础/index.rst
+   服务基础/index.rst
+   云基础/index.rst
+   集成项目/index.rst
+   其他项目/index.rst

@@ -1,15 +1,12 @@
-操作系统
+服务基础
 ===============================
 
-rocky
-
-debian
+待补充
 
 .. toctree::
    :maxdepth: 3
 
 
-   rocky.md
-   debian.md 
+
 
    
