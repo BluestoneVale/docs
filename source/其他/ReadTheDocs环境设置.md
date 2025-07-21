@@ -1,0 +1,4 @@
+# ReadTheDocs环境设置
+
+Sphinx + Anaconda
+https://sphinx-doc.readthedocs.io/zh-cn/master/usage/installation.html#anaconda

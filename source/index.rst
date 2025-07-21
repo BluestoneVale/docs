@@ -25,4 +25,4 @@
    服务基础/index.rst
    云基础/index.rst
    集成项目/index.rst
-   其他项目/index.rst
+   其他/index.rst
