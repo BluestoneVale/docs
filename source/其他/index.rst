@@ -7,8 +7,8 @@
    :maxdepth: 3
 
 
-   桌面环境设置.md
-   ProxmoxVE环境设置.md
+   桌面环境笔记.md
+   ProxmoxVE环境笔记.md
    VisualStudioCode环境设置.md
    Markdown学习笔记.md
    ReStructuredText学习笔记.md
