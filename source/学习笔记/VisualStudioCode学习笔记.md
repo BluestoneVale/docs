@@ -1,4 +1,4 @@
-# VisualStudioCode环境设置
+# VisualStudioCode学习笔记
 
 * 官网：https://code.visualstudio.com/updates/v1_102
 * 版本：https://code.visualstudio.com/docs/supporting/faq#_previous-release-versions
