@@ -1,13 +1,14 @@
 # VisualStudioCode环境设置
 
-软件
-
-版本: 1.97.2
-提交: e54c774e0add60467559eb0d1e229c6452cf8447
-日期: 2025-02-12T23:20:35.343Z
-Electron: 32.2.7
-ElectronBuildId: 10982180
-Chromium: 128.0.6613.186
-Node.js: 20.18.1
-V8: 12.8.374.38-electron.0
-OS: Darwin x64 19.6.0
+* 官网：https://code.visualstudio.com/updates/v1_102
+* 版本：https://code.visualstudio.com/docs/supporting/faq#_previous-release-versions
+* 建议版本: 1.97.2，版本高会同步升高插件版本，例如还有 centos-7.x 这类老旧系统远程开发时，高版本会出现插件无法支持老旧系统
+* 解决办法，可以降低插件版本。所以如果有多个桌面环境（公司、笔记本、家），开发通过ssh远程插件，建议版本统一
+* 常用插件：
+  * Chinese (Simplified) (简体中文) Language Pack for Visual Studio Code
+  * Markdown Preview Enhanced
+  * Typora 一般根上一个插件根据场景切换使用
+  * Remote - SSH
+  * Remote - SSH: Editing Configuration Files
+  * Remote Explorer
+  * Go
