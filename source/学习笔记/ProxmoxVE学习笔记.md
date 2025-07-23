@@ -67,8 +67,8 @@ https://enterprise.proxmox.com/iso/proxmox-ve_8.1-2.iso
  
 ### pvetools工具准备（本地）
 
-下载： https://github.com/ivanhao/pvetools/releases/download/pve8/pvetools-pve8.0.3.zip
-上传：/opt
+* 下载：https://github.com/ivanhao/pvetools/releases/download/pve8/pvetools-pve8.0.3.zip
+* 上传：/opt
 
 
 ### 软件安装

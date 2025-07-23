@@ -176,7 +176,7 @@ brew update
 命令行工具
 
 * 安装字体：Menlo for Powerline，可以解决zsh提示符问号
-  下载：https://github.com/BluestoneVale/docs/blob/main/fonts/Menlo%20for%20Powerline.ttf  
+* 下载：https://github.com/BluestoneVale/docs/blob/main/fonts/Menlo%20for%20Powerline.ttf  
 * 系统自带 Terminal
   * 菜单：终端-偏好设置-描述文件
     * HomeBrew 设置默认
@@ -384,7 +384,7 @@ git config --global https.https://github.com.proxy socks5://127.0.0.1:7070
 **浏览器代理配置**
 
   * Firefox 应用
-    下载：https://www.firefox.com/zh-CN/ 
+  * 下载：https://www.firefox.com/zh-CN/ 
   * 菜单：Firefox-偏好设置-常规：网络设置
   * 手动配置代理：
     * SOCKS 主机：127.0.0.1
