@@ -1,6 +1,6 @@
 # MacOS学习笔记
 
-整理记录，持续更新。
+整理学习笔记持续更新。
 
 ## 硬件
 
@@ -9,6 +9,7 @@
 大概1995年开始接触计算机，从80386开始，然后80486、80586。
 直到1997年左右家里买的第一台计算机(联想台式，1万元左右、MMX奔腾166Mhz、内存16M、硬盘2.1G)。
 在这之后都是自己组装机，这些年算下来也有5台左右。
+很是感慨科技更新速度之不可思议。
 
 **Macbook Pro 2010**
 
@@ -74,8 +75,14 @@
 |硬盘1|256GB 固态硬盘|
 |系统|macOS Sequoia 15.4|
 
-2025年3200元左右购入，相对2018那台，直观感受速度快温度低，x86环境试过几种虚拟方式不理想彻底放弃。
-以后会是MacOS环境和ProxmoxVE环境组合使用，如此本地桌面环境硬件配置就不需要那么高了。
+2025年3200元左右购入，相对2018那台，直观感受速度快温度低。
+
+Intel MacOS Catalina 10.15.7 虚拟化应用推荐免费的VMware Fusion和Docker Desktop。
+Apple Silicon MacOS Sequoia 15.4 虚拟化应用推荐UTM和Orbstack，x86虚拟体验不好。
+
+>新方案MacOS和ProxmoxVE组合
+缺点：网络远程或携带小主机，前者在移动办受公网络不稳定影响，后者小主机供电和携带增加负荷也需要妥协。
+优点：本地硬件配置选丐版压低成本，ProxmoxVE服务器的选配丰富，应用及数据安全都有提升。
 
 
 ## 软件
@@ -263,7 +270,6 @@ zsh-syntax-highlighting
 zsh-autosuggestion
 插件功能：输入命令时可提示自动补全（灰色部分），按tab键（→ ）即可补全。
 
-
 ```bash
 # 克隆项目到本地 $ZSH_CUSTOM/plugins 路径下，默认是 ~/.oh-my-zsh/custom/plugins
 # 官网 zsh-autosuggestions
@@ -358,26 +364,23 @@ unset socks5_proxy
 如果想git拉取代码全部走代理，可以有以下这些选择
 
 ```bash
-# Set HTTP proxy
+# 设置 HTTP HTTPS 全局代理 HTTP
 git config --global http.proxy http://127.0.0.1:7080
-# Set HTTPS proxy
 git config --global https.proxy http://127.0.0.1:7080
-# Set HTTP proxy with SOCKS5
+# 设置 HTTP HTTPS 全局代理 SOCKS5 很多应用不支持
 git config --global http.proxy socks5://127.0.0.1:7070
-# Set HTTPS proxy with SOCKS5
 git config --global https.proxy socks5://127.0.0.1:7070
-# Unset HTTP proxy
+# 取消 HTTP HTTPS 全局代理
 git config --global --unset http.proxy
-# Unset HTTPS proxy
 git config --global --unset https.proxy
-# View HTTP proxy setting
+# 查看全局代理
 git config --global --get http.proxy
-# View HTTPS proxy setting
 git config --global --get https.proxy
 # 仅 https://github.com 走代理
-# Set HTTP proxy with SOCKS5
+git config --global http.https://github.com.proxy http://127.0.0.1:7080
+git config --global https.https://github.com.proxy http://127.0.0.1:7080
+# 或
 git config --global http.https://github.com.proxy socks5://127.0.0.1:7070
-# Set HTTPS proxy with SOCKS5
 git config --global https.https://github.com.proxy socks5://127.0.0.1:7070
 ```
 

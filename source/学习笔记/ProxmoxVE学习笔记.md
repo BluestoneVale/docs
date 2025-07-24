@@ -50,7 +50,7 @@
 |系统|Proxmox VE 8.1.4 x86_64|
 
 2024年二手330元左右购入准系统，内存550元左右，硬盘440元左右，处理器300元左右。
-放家里自建各类服务，选择这个考虑带外管理（vPro 需要插HDMI欺骗器）。
+放家里部署NAS，选择这个考虑带外管理（vPro 需要插HDMI欺骗器）。
 
 ## 软件
 
@@ -120,3 +120,103 @@ reboot
 # 检查是否开启
 dmesg | grep -e DMAR -e IOMMU
 ``` 
+
+### UPS 配置
+
+硬件是施耐德 APC BK650M2-CH 的 UPS（不间断电源）。
+配合 apcupsd 使用，满足普通家庭用户需求。
+
+**UPS物理连接主机**
+将 UPS 电源线连接市电并开机，把服务器关机，服务器主机电源线插到 UPS 的那些供电插口上。把随 UPS 一起附赠的信号线网线头查到 UPS 的信号输出口，USB 头插到主机后面的 USB 上。
+
+**检查信号线路**
+使用命令 lsusb 确认服务器上已经识别到 UPS了。
+
+```bash
+root@hp800g4sff:~# lsusb 
+Bus 002 Device 001: ID 1d6b:0003 Linux Foundation 3.0 root hub
+Bus 001 Device 010: ID 051d:0002 American Power Conversion Uninterruptible Power Supply
+Bus 001 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub
+```
+
+**安装 Apcupsd 服务**
+
+```bash
+# 安装软件
+apt install apcupsd
+# 备份配置
+cp /etc/apcupsd/apcupsd.conf /etc/apcupsd/apcupsd.conf.bak
+```
+
+**配置 Apcupsd 服务**
+编辑配置文件 /etc/apcupsd/apcupsd.conf
+
+```bash
+# 连接线材：USB
+UPSCABLE usb
+# 连接方式：USB
+UPSTYPE usb
+# 串口信息，这个需要注释或者配置为置空
+# DEVICE /dev/ttyS0
+# 停电后，电池开始供电多少秒后，开始关闭系统。
+TIMEOUT 60
+# 电池供电多少秒后，关闭 UPS。这里设置为 0 禁用，担心主机没有完全关机，ups 就主动断电了
+KILLDELAY 0
+# 停电后使用电池供电时，电池电量剩余小于等于 30% 时，执行关闭系统操作
+BATTERYLEVEL 30
+# 停电后使用电池供电时，电池电量供电剩余时间小于 10 分钟时，执行关闭系统操作
+MINUTES 3
+# 从检测到电源故障到 apcupsd 对事件做出反应的秒数
+ONBATTERYDELAY 6
+```
+
+**调整 Apcupsd 服务**
+```bash
+systemctl restart apcupsd
+systemctl status apcupsd
+systemctl enable apcupsd
+```
+
+**查看 Apcupsd 服务状态**
+```bash
+root@hp800g4sff:~# apcaccess
+APC      : 001,035,0846
+DATE     : 2025-07-24 15:16:33 +0800  
+HOSTNAME : hp800g4sff
+VERSION  : 3.14.14 (31 May 2016) debian
+UPSNAME  : hp800g4sff
+CABLE    : USB Cable
+DRIVER   : USB UPS Driver
+UPSMODE  : Stand Alone
+STARTTIME: 2025-07-24 11:54:56 +0800  
+MODEL    : Back-UPS BK650M2-CH 
+STATUS   : ONLINE 
+LINEV    : 222.0 Volts
+LOADPCT  : 12.0 Percent
+BCHARGE  : 100.0 Percent
+TIMELEFT : 60.3 Minutes
+MBATTCHG : 30 Percent
+MINTIMEL : 3 Minutes
+MAXTIME  : 60 Seconds
+SENSE    : Low
+LOTRANS  : 160.0 Volts
+HITRANS  : 278.0 Volts
+ALARMDEL : 30 Seconds
+BATTV    : 13.5 Volts
+LASTXFER : No transfers since turnon
+NUMXFERS : 0
+TONBATT  : 0 Seconds
+CUMONBATT: 0 Seconds
+XOFFBATT : N/A
+SELFTEST : OK
+STATFLAG : 0x05000008
+BATTDATE : 2001-01-01
+NOMINV   : 220 Volts
+NOMBATTV : 12.0 Volts
+NOMPOWER : 390 Watts
+FIRMWARE : 0000 00 -292804G 
+END APC  : 2025-07-24 15:17:10 +0800  
+```
+注意看状态 STATUS   : ONLINE，说明当前市电正常，负载百分比：LOADPCT。
+参考资料：https://beltxman.com/4560.html
+

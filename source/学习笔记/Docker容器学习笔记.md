@@ -1,14 +1,19 @@
 # Docker容器学习笔记
 
-## 操作系统安装
+## 操作系统
+
+ProxmoxVE环境中有两个方式，虚拟机和CT容器，如果没有特殊要求，推荐CT容器。
+
+**CT容器方式**
+
+debian-12-standard_12.7-1_amd64.tar.zst
+
+**虚拟机方式**
 
 * ISO: debian-live-12.10.0-amd64-standard.iso
 * 语言：英文
 * 国家：中国
-* 创建一个普通账户：admin   
-* 密码：admin@local
-* 分区LVM
-* 软件源，科技大学。
+* 分区：默认
 
 ### 时区
 
