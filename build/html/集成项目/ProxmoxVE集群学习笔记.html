@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="zh-CN" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>6.1. ProxmoxVE集群学习笔记 &mdash; 蓝石溪谷的知识库 1.0 文档</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
+        <script src="../_static/translations.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="搜索" href="../search.html" />
+    <link rel="next" title="7. 学习笔记" href="../%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/index.html" />
+    <link rel="prev" title="6. 集成项目" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> 蓝石溪谷的知识库
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="在文档中搜索" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">本书目录：</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../%E6%91%98%E8%A6%81/index.html">1. 摘要</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../%E5%B7%A5%E4%BD%9C%E5%B2%97%E4%BD%8D/index.html">2. 工作岗位</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../%E7%B3%BB%E7%BB%9F%E5%9F%BA%E7%A1%80/index.html">3. 系统基础</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../%E6%9C%8D%E5%8A%A1%E5%9F%BA%E7%A1%80/index.html">4. 服务基础</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../%E4%BA%91%E5%9F%BA%E7%A1%80/index.html">5. 学习笔记</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">6. 集成项目</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">6.1. ProxmoxVE集群学习笔记</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id1">6.1.1. 安装</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id2">6.1.1.1. 准备</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id3">6.1.1.2. 规划</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#id4">6.1.2. 初始化</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id5">6.1.2.1. 免密登录（本地）</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pvetools">6.1.2.2. pvetools工具准备（本地）</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id6">6.1.2.3. 软件安装</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id7">6.1.2.4. 环境设置</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#local-lvm">6.1.2.5. local-lvm 删除</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#pve">6.1.3. 实验科目1：创建PVE集群</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#pve-node-1">6.1.3.1. pve-node-1 操作</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pve-node-2pve-node-3">6.1.3.2. pve-node-2、pve-node-3 操作</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#pve-ceph">6.1.4. 实验科目2：PVE-Ceph集群创建</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#pve-ha">6.1.5. 实验科目3：PVE-HA 高可用集群</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id8">6.1.6. 实验科目4：PVE-HA 迁移</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#pvepve-ceph">6.1.7. 实验科目4：PVE集群、PVE-Ceph集群、新增</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id9">6.1.8. 实验科目5：故障节点回归</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/index.html">7. 学习笔记</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">蓝石溪谷的知识库</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="index.html"><span class="section-number">6. </span>集成项目</a> &raquo;</li>
+      <li><span class="section-number">6.1. </span>ProxmoxVE集群学习笔记</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/集成项目/ProxmoxVE集群学习笔记.md.txt" rel="nofollow"> 查看页面源码</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="proxmoxve">
+<h1><span class="section-number">6.1. </span>ProxmoxVE集群学习笔记<a class="headerlink" href="#proxmoxve" title="此标题的永久链接"></a></h1>
+<section id="id1">
+<h2><span class="section-number">6.1.1. </span>安装<a class="headerlink" href="#id1" title="此标题的永久链接"></a></h2>
+<section id="id2">
+<h3><span class="section-number">6.1.1.1. </span>准备<a class="headerlink" href="#id2" title="此标题的永久链接"></a></h3>
+<ul class="simple">
+<li><p>BIOS设置</p>
+<ul>
+<li><p>开启VT-x虚拟化支持</p></li>
+<li><p>开启VT-o虚拟化IO影射支持</p></li>
+</ul>
+</li>
+<li><p>Proxmox Virtual Environment ISO 镜像：https://enterprise.proxmox.com/iso/proxmox-ve_8.4-1.iso</p></li>
+<li><p>大于 2G 的 U 盘（存放 Proxmox Virtual Environment ISO 镜像）</p></li>
+<li><p>刻录工具（ 推荐 balenaEtcher ）：https://github.com/balena-io/etcher/releases/tag/v1.19.21</p></li>
+</ul>
+</section>
+<section id="id3">
+<h3><span class="section-number">6.1.1.2. </span>规划<a class="headerlink" href="#id3" title="此标题的永久链接"></a></h3>
+<ul class="simple">
+<li><p>虚拟机，名称，地址，网关</p>
+<ul>
+<li><p>pve-node-1.local 192.168.1.201/24 192.168.1.1</p></li>
+<li><p>pve-node-2.local 192.168.1.202/24 192.168.1.1</p></li>
+<li><p>pve-node-3.local 192.168.1.203/24 192.168.1.1</p></li>
+<li><p>pve-node-4.local 192.168.1.204/24 192.168.1.1</p></li>
+<li><p>PS</p>
+<ul>
+<li><p>pve-node-3模拟故障，pve-node-4模拟故障后新增</p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>系统-页签</p>
+<ul>
+<li><p>机型：Q35</p></li>
+</ul>
+</li>
+<li><p>磁盘-页签</p>
+<ul>
+<li><p>scsi0 sda 系统盘</p></li>
+<li><p>scsi1 sdb 数据盘</p></li>
+<li><p>scsi2 sdc 数据盘-DB盘</p></li>
+<li><p>scsi3 sdd 数据盘-WAL盘</p></li>
+<li><p>PS</p>
+<ul>
+<li><p>数据盘：用于存储数据的磁盘，为节省成本，通常采用HDD磁盘。</p></li>
+<li><p>DB盘：高速缓存，用于存储BlueStore内部产生的元数据文件，可采用普通SSD。</p></li>
+<li><p>WAL盘：超高速缓存，用于存储RocksDB log文件，可以采用性能更高、延迟更低的SSD或NVMe SSD。</p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>CPU</p>
+<ul>
+<li><p>1 核</p></li>
+<li><p>类别：Host</p></li>
+</ul>
+</li>
+<li><p>内存</p>
+<ul>
+<li><p>12048</p></li>
+<li><p>PS</p>
+<ul>
+<li><p>8GB内存使用率接近90%</p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>网络</p>
+<ul>
+<li><p>默认</p></li>
+</ul>
+</li>
+</ul>
+</section>
+</section>
+<section id="id4">
+<h2><span class="section-number">6.1.2. </span>初始化<a class="headerlink" href="#id4" title="此标题的永久链接"></a></h2>
+<section id="id5">
+<h3><span class="section-number">6.1.2.1. </span>免密登录（本地）<a class="headerlink" href="#id5" title="此标题的永久链接"></a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ssh-copy-id<span class="w"> </span>pve-node-1
+ssh-copy-id<span class="w"> </span>pve-node-2
+ssh-copy-id<span class="w"> </span>pve-node-3
+ssh-copy-id<span class="w"> </span>pve-node-4
+</pre></div>
+</div>
+</section>
+<section id="pvetools">
+<h3><span class="section-number">6.1.2.2. </span>pvetools工具准备（本地）<a class="headerlink" href="#pvetools" title="此标题的永久链接"></a></h3>
+<p>下载： https://github.com/ivanhao/pvetools/releases/download/pve8/pvetools-pve8.0.3.zip，上传：/opt</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>scp<span class="w"> </span>pvetools-pve8.0.3.zip<span class="w"> </span>pve-node-1:/opt/
+scp<span class="w"> </span>pvetools-pve8.0.3.zip<span class="w"> </span>pve-node-2:/opt/
+scp<span class="w"> </span>pvetools-pve8.0.3.zip<span class="w"> </span>pve-node-3:/opt/
+scp<span class="w"> </span>pvetools-pve8.0.3.zip<span class="w"> </span>pve-node-4:/opt/
+</pre></div>
+</div>
+</section>
+<section id="id6">
+<h3><span class="section-number">6.1.2.3. </span>软件安装<a class="headerlink" href="#id6" title="此标题的永久链接"></a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>rm<span class="w"> </span>/etc/apt/sources.list.d/pve-enterprise.list
+apt-get<span class="w"> </span>update
+apt-get<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>vim<span class="w"> </span>unzip
+</pre></div>
+</div>
+</section>
+<section id="id7">
+<h3><span class="section-number">6.1.2.4. </span>环境设置<a class="headerlink" href="#id7" title="此标题的永久链接"></a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>/opt
+unzip<span class="w"> </span>pvetools-pve8.0.3.zip
+<span class="nb">cd</span><span class="w"> </span>pvetools-pve8.0.3
+./pvetools.sh<span class="w"> </span>
+</pre></div>
+</div>
+<p>关闭企业源，切换国内源ustc.edu.cn，关闭订阅</p>
+</section>
+<section id="local-lvm">
+<h3><span class="section-number">6.1.2.5. </span>local-lvm 删除<a class="headerlink" href="#local-lvm" title="此标题的永久链接"></a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>lvremove<span class="w"> </span>pve/data
+lvextend<span class="w"> </span>-l<span class="w"> </span>+100%FREE<span class="w"> </span>-r<span class="w"> </span>pve/root
+resize2fs<span class="w"> </span>/dev/mapper/pve-root
+<span class="c1"># 网页登陆，数据中心-存储-删除local-lvm</span>
+<span class="c1"># 编辑local，内容里添加 磁盘映像和容器，保存</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="pve">
+<h2><span class="section-number">6.1.3. </span>实验科目1：创建PVE集群<a class="headerlink" href="#pve" title="此标题的永久链接"></a></h2>
+<section id="pve-node-1">
+<h3><span class="section-number">6.1.3.1. </span>pve-node-1 操作<a class="headerlink" href="#pve-node-1" title="此标题的永久链接"></a></h3>
+<p>数据中心-集群，创建集群：mycluster
+数据中心-集群，加入信息：复制信息</p>
+</section>
+<section id="pve-node-2pve-node-3">
+<h3><span class="section-number">6.1.3.2. </span>pve-node-2、pve-node-3 操作<a class="headerlink" href="#pve-node-2pve-node-3" title="此标题的永久链接"></a></h3>
+<p>加入集群，输入口令和选择本地地址</p>
+<p>页面出现报错: ‘/etc/pve/nodes/pve-node-2/pve-ssl.pem’ does not exist! (500)
+重新刷新后，集群加入正常。</p>
+<p>网络架构设计参考：https://zhuanlan.zhihu.com/p/617024637
+集群使用参考：https://wiki.sqlfans.cn/it/pve-install-cluster.html
+其他参考文档：https://blog.csdn.net/hanziqing0630/article/details/114262035</p>
+</section>
+</section>
+<section id="pve-ceph">
+<h2><span class="section-number">6.1.4. </span>实验科目2：PVE-Ceph集群创建<a class="headerlink" href="#pve-ceph" title="此标题的永久链接"></a></h2>
+<ul class="simple">
+<li><p>软件源准备</p></li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cat<span class="w"> </span>&gt;<span class="w"> </span>/etc/apt/sources.list.d/ceph.list<span class="w"> </span><span class="s">&lt;&lt;EOF</span>
+<span class="s"># deb https://enterprise.proxmox.com/debian/ceph-quincy bookworm enterprise</span>
+<span class="s">deb https://mirrors.ustc.edu.cn/proxmox/debian/ceph-quincy/ bookworm no-subscription</span>
+<span class="s">EOF</span>
+cp<span class="w"> </span>/usr/share/perl5/PVE/CLI/pveceph.pm<span class="w"> </span>/usr/share/perl5/PVE/CLI/pveceph.pm_back
+sed<span class="w"> </span>-i<span class="w"> </span><span class="s1">&#39;s|http://download.proxmox.com|https://mirrors.ustc.edu.cn/proxmox|g&#39;</span><span class="w"> </span>/usr/share/perl5/PVE/CLI/pveceph.pm
+apt<span class="w"> </span>update
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>pve-node-1 pve-node-2、pve-node-3 操作</p>
+<ul>
+<li><p>数据中心-节点-Ceph，reef (18.2)，无订阅，回答Y</p></li>
+<li><p>Public Network，选择本地网段 192.168.1.201，其他默认，最后完成</p></li>
+</ul>
+</li>
+<li><p>pve-node-1 操作</p>
+<ul>
+<li><p>Ceph-监视器，管理员-创建，pve-node-2、pve-node-3。</p></li>
+<li><p>Ceph-CephFS，元数据服务器-创建，pve-node-1、pve-node-2、pve-node-3</p></li>
+</ul>
+</li>
+<li><p>pve-node-1 pve-node-2、pve-node-3 操作</p>
+<ul>
+<li><p>Ceph-OSD，创建OSD</p>
+<ul>
+<li><p>磁盘：sdb</p></li>
+<li><p>DB盘：sdc</p></li>
+<li><p>WAL盘：sdd</p></li>
+<li><p>设备类型：ssd</p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>pve-node-1 操作</p>
+<ul>
+<li><p>Ceph-CephFS，创建CephFS，名称cephfs</p></li>
+<li><p>cephfs存储，CT模版，添加debian12</p></li>
+<li><p>Ceph-资源池，创建Ceph_pool，名称ssd_data</p></li>
+</ul>
+</li>
+</ul>
+<p>其他参考文档：https://zhuanlan.zhihu.com/p/617024637</p>
+</section>
+<section id="pve-ha">
+<h2><span class="section-number">6.1.5. </span>实验科目3：PVE-HA 高可用集群<a class="headerlink" href="#pve-ha" title="此标题的永久链接"></a></h2>
+<ul class="simple">
+<li><p>pve-node-1 操作 创建虚拟机</p>
+<ul>
+<li><p>创建测试CT虚拟机</p>
+<ul>
+<li><p>名称：lxc-ha</p></li>
+<li><p>192.168.1.210/24</p></li>
+</ul>
+</li>
+<li><p>创建测试VM虚拟机</p>
+<ul>
+<li><p>名称：vm-ha</p></li>
+<li><p>192.168.1.118/24 dhcp</p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>数据中心 操作</p>
+<ul>
+<li><p>数据中心-HA，资源-添加，选择两个虚拟机。</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="id8">
+<h2><span class="section-number">6.1.6. </span>实验科目4：PVE-HA 迁移<a class="headerlink" href="#id8" title="此标题的永久链接"></a></h2>
+<ul class="simple">
+<li><p>不使用ceph也可以迁移，迁移的时候local存储会复制虚拟机镜像到目标机器。故障的时候不行。</p></li>
+<li><p>页面操作手动迁移两个虚拟机到pve-node-3，验证</p></li>
+<li><p>强制pve-node-3关机，等待自动迁移。验证</p></li>
+</ul>
+</section>
+<section id="pvepve-ceph">
+<h2><span class="section-number">6.1.7. </span>实验科目4：PVE集群、PVE-Ceph集群、新增<a class="headerlink" href="#pvepve-ceph" title="此标题的永久链接"></a></h2>
+<ul class="simple">
+<li><p>pve-node-4 操作,</p>
+<ul>
+<li><p>加入集群，输入口令和选择本地地址</p></li>
+<li><p>准备ceph软件源，安装ceph</p></li>
+<li><p>Ceph-监视器，监视器-创建，pve-node-4</p></li>
+<li><p>Ceph-监视器，管理员-创建，pve-node-4</p></li>
+<li><p>Ceph-CephFS，元数据服务器-创建，pve-node-4</p></li>
+<li><p>Ceph-OSD，创建OSD</p>
+<ul>
+<li><p>磁盘：sdb</p></li>
+<li><p>DB盘：sdc</p></li>
+<li><p>WAL盘：sdd</p></li>
+<li><p>设备类型：ssd</p></li>
+</ul>
+</li>
+<li><p>手动迁移应用验证</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="id9">
+<h2><span class="section-number">6.1.8. </span>实验科目5：故障节点回归<a class="headerlink" href="#id9" title="此标题的永久链接"></a></h2>
+<ul class="simple">
+<li><p>默认自动隔离</p></li>
+<li><p>清空集群数据后可重新加入集群</p></li>
+</ul>
+<p>pve-node-1 操作</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pvecm<span class="w"> </span>delnode<span class="w"> </span>pve-node-3
+</pre></div>
+</div>
+<p>pve-node-3 操作</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>systemctl<span class="w"> </span>stop<span class="w"> </span>pve-cluster.service
+systemctl<span class="w"> </span>stop<span class="w"> </span>corosync.service
+pmxcfs<span class="w"> </span>-l<span class="w"> </span><span class="c1">#强制设置为本地模式</span>
+<span class="nb">cd</span><span class="w"> </span>/etc/pve/
+rm<span class="w"> </span>corosync.conf
+rm<span class="w"> </span>-rf<span class="w"> </span>/etc/corosync/
+killall<span class="w"> </span>pmxcfs
+systemctl<span class="w"> </span>start<span class="w"> </span>pve-cluster.service
+rm<span class="w"> </span>-rf<span class="w"> </span>/etc/pve/nodes/*
+</pre></div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="index.html" class="btn btn-neutral float-left" title="6. 集成项目" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> 上一页</a>
+        <a href="../%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/index.html" class="btn btn-neutral float-right" title="7. 学习笔记" accesskey="n" rel="next">下一页 <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; 版权所有 2025, BluestoneVale.</p>
+  </div>
+
+  利用 <a href="https://www.sphinx-doc.org/">Sphinx</a> 构建，使用了 
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">主题</a>
+    由 <a href="https://readthedocs.org">Read the Docs</a>开发.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
