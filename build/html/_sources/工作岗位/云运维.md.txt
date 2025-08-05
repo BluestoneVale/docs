@@ -1,8 +1,0 @@
-# **云运维**  
-**核心场景**：基于公有云（AWS/阿里云/华为云）或私有云（OpenStack）的资源管理与运维。  
-**知识点**：  
-- 云服务类型：IaaS（EC2/ECS、VPC、负载均衡）、PaaS（RDS数据库、OSS/S3对象存储、容器服务EKS/ACK）、Serverless（函数计算FC/Lambda）。  
-- 云平台操作：控制台操作、CLI工具（aws cli、aliyun cli）、API调用。  
-- 资源编排：云厂商编排工具（CloudFormation、ROS）、跨云编排（Terraform）。  
-- 监控与成本：云监控服务（CloudWatch、阿里云ARMS）、成本优化（资源弹性伸缩、闲置资源清理）。  
-- 灾备与安全：云快照、跨区域备份、云安全中心（WAF、DDoS防护）。  
