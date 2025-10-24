@@ -19,5 +19,3 @@
 .. toctree::
    :maxdepth: 3
 
-   ProxmoxVE-8.14集群学习笔记.md
-   ProxmoxVE-9.0集群学习笔记.md  

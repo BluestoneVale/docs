@@ -58,34 +58,32 @@
 * BIOS设置
   * 开启VT-x虚拟化支持
   * 开启VT-o虚拟化IO影射支持
-* PVE 安装包 8.1.4 ，内核 6.5.11-8 。
-* 大于 2G 的 U 盘（存放 Proxmox Virtual Environment ISO 镜像）
-* 刻录工具（ 推荐 balenaEtcher ）
-https://github.com/balena-io/etcher/releases/tag/v1.19.21
-* Proxmox Virtual Environment ISO 镜像
-https://enterprise.proxmox.com/iso/proxmox-ve_8.1-2.iso
- 
-### pvetools工具准备（本地）
-
-* 下载：https://github.com/ivanhao/pvetools/releases/download/pve8/pvetools-pve8.0.3.zip
-* 上传：/opt
+* 刻录工具（ 推荐 balenaEtcher ）https://github.com/balena-io/etcher/releases/tag/v1.19.21
+* Proxmox Virtual Environment ISO 镜像 https://enterprise.proxmox.com/iso/
 
 
 ### 软件安装
+
 ```bash
-rm /etc/apt/sources.list.d/pve-enterprise.list
 apt-get update
 apt-get install -y vim unzip
 ```
 
 ### 切换软件源
+
+8.x 版本: 
 ```bash
-cd /opt
+wget https://github.com/ivanhao/pvetools/releases/download/pve8/pvetools-pve8.0.3.zip
 unzip pvetools-pve8.0.3.zip
 cd pvetools-pve8.0.3
-./pvetools.sh 
+bash pvetools.sh 
 ```
-关闭企业源，切换国内源ustc.edu.cn，关闭订阅
+
+9.x 版本:
+```bash
+curl -s https://github.com/Mapleawaa/PVE-Tools-9/blob/main/PVE-Tools.sh | bash
+```
+切换镜像国内源，关闭订阅提示。
 
 ### local-lvm 删除
 
@@ -217,6 +215,7 @@ NOMPOWER : 390 Watts
 FIRMWARE : 0000 00 -292804G 
 END APC  : 2025-07-24 15:17:10 +0800  
 ```
-注意看状态 STATUS   : ONLINE，说明当前市电正常，负载百分比：LOADPCT。
+
+注意看状态 STATUS   : ONLINE，说明当前市电正常。
 参考资料：https://beltxman.com/4560.html
 

@@ -6,14 +6,17 @@ ProxmoxVE环境中有两个方式，虚拟机和CT容器，如果没有特殊要
 
 **CT容器方式**
 
-debian-12-standard_12.7-1_amd64.tar.zst
+debian-12-standard_12.12-1_amd64.tar.zst
 
 **虚拟机方式**
 
-* ISO: debian-live-12.10.0-amd64-standard.iso
-* 语言：英文
-* 国家：中国
-* 分区：默认
+* ISO: debian-12.12.0-amd64-netinst.iso
+* 语言: 英文
+* 国家: 中国
+* 分区: 默认
+* 软件源: utsc
+* 软件包: 桌面环境如果不需要，不要勾选。SSH 这个必备
+* 其他默认
 
 ### 时区
 
@@ -54,6 +57,7 @@ EOF
 ### 软件源
 
 ```bash
+# 软件源配置，如果想改，参考这个
 cat > /etc/apt/sources.list <<EOF
 ## 默认禁用源码镜像以提高速度，如需启用请自行取消注释
 deb http://mirrors.ustc.edu.cn/debian/ bookworm main contrib non-free non-free-firmware
@@ -79,15 +83,16 @@ update-command-not-found
 
 ```bash
 # 如果指定版本，可以先查看哪些版本
-apt list -a docker-ce
-apt-cache madison docker-ce
+# apt list -a docker-ce
+# apt-cache madison docker-ce
 # apt install -y docker-ce=5:28.1.1-1~debian.12~bookworm
 apt install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
 mkdir -p /opt/container
 cd /opt/container
-wget https://github.com/docker/compose/releases/download/v2.36.2/docker-compose-linux-x86_64
-mv docker-compose-linux-x86_64 /usr/local/bin/docker-compose
-chmod +x /usr/local/bin/docker-compose
+# 如果想要独立命令，参考如下命令
+# wget https://github.com/docker/compose/releases/download/v2.36.2/docker-compose-linux-x86_64
+# mv docker-compose-linux-x86_64 /usr/local/bin/docker-compose
+# chmod +x /usr/local/bin/docker-compose
 # 如果国内需要镜像
 sudo tee /etc/docker/daemon.json <<EOF
 {
